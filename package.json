@@ -6,6 +6,7 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "lint": "eslint .",
+    "android:clean": "cd android && ./gradlew clean && cd ..",
     "start": "react-native start",
     "test": "jest"
   },
@@ -25,6 +26,7 @@
     "react-native": "0.71.14",
     "react-native-config": "1.5.0",
     "react-native-reanimated": "3.5.4",
+    "react-native-splash-screen": "^3.3.0",
     "react-native-vector-icons": "^10.0.3",
     "zustand": "^4.4.1"
   },
