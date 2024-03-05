@@ -17,12 +17,28 @@ export const StackNavigator = () => {
     
   return (
     <Stack.Navigator
-      initialRouteName='Login'
-      screenOptions={{ headerShown: false }}
-    >
-      <Stack.Screen  name="Login" component={LoginScreen} />
-      <Stack.Screen  name="Register" component={RegisterScreen} />
-      <Stack.Screen  name="Account" component={DrawerNavigator} />
+        initialRouteName='Login'
+        screenOptions={{ headerShown: false }}  
+        
+      >
+        <Stack.Screen  
+          name="Login" component={LoginScreen} 
+          options={{
+            animation:'slide_from_right'
+        }}
+        />
+        <Stack.Screen  
+          name="Register" component={RegisterScreen}
+          options={{
+            animation:'slide_from_right'
+        }}
+        />
+        <Stack.Screen  
+          name="Account" component={DrawerNavigator} 
+          options={{
+            animation:'slide_from_right'
+        }}
+        />
     </Stack.Navigator>
   )
 }
