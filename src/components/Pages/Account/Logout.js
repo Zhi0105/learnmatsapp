@@ -1,12 +1,37 @@
-import React from 'react'
-import { Text, View } from 'react-native'
+import React, { useEffect, useContext } from 'react'
+import { Alert } from 'react-native'
+import { AuthContext } from '@_context/AuthContext';
 
-export const Logout = () => {
+export const Logout = ({ navigation }) => {
+  const { logout } = useContext(AuthContext)
+
+  useEffect(() => {
+    const unsubscribe = navigation.addListener('focus', () => {
+      Alert.alert(
+        'Message from learnmatsapp',
+        'You really want to sign out ?',
+        [
+          {
+            text: "Yes",
+            onPress: () => {
+              logout()
+            }
+          }, 
+          {
+            text: "No",
+            onPress: () => {
+              navigation.goBack()
+            }
+          }
+        ],
+        { cancelable: false }
+      )
+    });
+
+    return unsubscribe;
+  }, [navigation])
+
   return (
-    <View className="logout-main min-h-screen flex justify-center items-center">
-      <Text className="text-xl text-red-500">
-        Hello from logout screen
-      </Text>
-    </View>
+    <React.Fragment></React.Fragment>
   )
 }
