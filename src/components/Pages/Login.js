@@ -1,13 +1,14 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import { Text, View, TextInput, TouchableOpacity, TouchableHighlight  } from 'react-native'
-import FastImage from 'react-native-fast-image'
 import { Controller, useForm } from 'react-hook-form'
+import { AuthContext } from '@_context/AuthContext';
+import FastImage from 'react-native-fast-image'
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
-
 
 export const Login = ({ navigation }) => {
   const [isPasswordVisible, setisPasswordVisible] = useState(false);
-
+  const { login, loginLoading } = useContext(AuthContext)
+  
   const {
     handleSubmit,
     control,
@@ -20,14 +21,15 @@ export const Login = ({ navigation }) => {
   });
 
   const onSubmit = (data) => {
-    console.log(data)
+    login(data)
   };
 
   const handlePasswordVisibility = (isVisible) => {
     setisPasswordVisible(!isVisible);
   };
 
-
+ 
+ 
   return (
     <View className="login-main min-h-screen flex justify-center items-center">
       <View className="w-4/5 flex flex-col items-center justify-center px-6 py-8 mx-auto rounded-lg shadow-lg bg-gray-50 lg:py-0">
@@ -37,6 +39,7 @@ export const Login = ({ navigation }) => {
             alt={"Logo"}
             resizeMode={FastImage.resizeMode.contain}
           />
+          
           <Text>Login to your Account</Text>
           <View className="form-container w-full p-6 space-y-4 form_container md:space-y-6 sm:p-8">
             <View className="space-y-4 form md:space-y-6">
@@ -99,9 +102,10 @@ export const Login = ({ navigation }) => {
 
               <TouchableOpacity 
                 className="w-full text-gray-900 bg-white flex justify-center items-center cursor-pointer hover:bg-gray-300 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center"
-                onPress={handleSubmit(onSubmit)}              
+                onPress={handleSubmit(onSubmit)}
+                disabled={loginLoading}              
               >
-                <Text>Login</Text>
+                <Text>{loginLoading ? "Please wait..." : "Login"}</Text>
               </TouchableOpacity> 
 
               
