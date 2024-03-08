@@ -11,7 +11,7 @@ export const KeyboardAvoidingTemplate = ({ children }) => {
       <KeyboardAvoidingView
         style={{ flex: 1, backgroundColor: '#EEEEEE' }}
         behavior={Platform.OS === 'ios' ? 'padding' : 'position'}
-        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : -100} // adjust the value according to your needs
+        keyboardVerticalOffset={Platform.OS === 'ios' ? 64 : -120} // adjust the value according to your needs
       >
         {children}
       </KeyboardAvoidingView>
