@@ -1,4 +1,4 @@
-import React, { useContext } from 'react'
+import React, { useContext, useState } from 'react'
 import { Text, View } from 'react-native'
 import useUserStore from '@_stores/auth'
 import { TranslationContext } from '@_context/TranslationContext'
@@ -8,14 +8,14 @@ import { Material } from './Home/Material'
 import useClasslevelStore from '@_stores/classlevel'
 import useMaterialStore from '@_stores/material'
 
-export const Home = () => {
+export const Home = ({ navigation }) => {
   const { translate } = useContext(TranslationContext)
   const { user } = useUserStore((state) => ({
     user: state.user,
   }));
   const { classlevels } = useClasslevelStore((state) => ({ classlevels: state.classlevels }));
   const { materials } = useMaterialStore((state) => ({ materials: state.materials }));
-
+  const [ selected, setSelected ] = useState()
 
   return (
     <View className="login-main min-h-screen bg-gray-100">
@@ -49,12 +49,16 @@ export const Home = () => {
           <Text className="text-xl font-bold">Class levels:</Text>
           <Classlevel 
             data={classlevels}
+            selected={selected}
+            setSelected={setSelected}
           />
         </View>
         <View className="materials-section h-[30%] px-4 mt-2">
           <Text className="text-xl font-bold">List of Materials:</Text>
           <Material 
             data={materials}
+            selected={selected}
+            navigation={navigation}
           />
         </View>
     </View>
