@@ -15,6 +15,7 @@ export const Logout = ({ navigation }) => {
             text: "Yes",
             onPress: () => {
               logout()
+              navigation.goBack()
             }
           }, 
           {
