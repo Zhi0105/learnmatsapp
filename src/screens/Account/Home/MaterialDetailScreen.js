@@ -6,7 +6,7 @@ export const MaterialDetailScreen = ({ route, navigation }) => {
     
   return (
     <KeyboardAvoidingTemplate>
-      <MaterialDetail navigaation={navigation} route={route} />
+      <MaterialDetail navigation={navigation} route={route} />
     </KeyboardAvoidingTemplate>
   )
 }
