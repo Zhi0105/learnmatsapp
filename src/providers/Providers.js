@@ -9,6 +9,8 @@ import { LanguageProviders } from './LanguageProviders';
 import { TranslationProviders } from './TranslationProviders';
 import { ClasslevelProviders } from './ClasslevelProviders';
 import { MaterialProviders } from './MaterialProviders';
+import { QuestionProviders } from './QuestionProviders';
+import { AnswerProviders } from './AnswerProviders';
 import { NativeBaseProvider } from 'native-base'
 
 export const Providers = () => {
@@ -24,8 +26,12 @@ export const Providers = () => {
                   <TranslationProviders>
                     <ClasslevelProviders>
                       <MaterialProviders>
-                        <Routes />
-                        <FlashMessage position="top" floating={false} />                        
+                        <QuestionProviders>
+                          <AnswerProviders>
+                            <Routes />
+                            <FlashMessage position="top" floating={false} />     
+                          </AnswerProviders>
+                        </QuestionProviders>
                       </MaterialProviders>
                     </ClasslevelProviders>
                   </TranslationProviders>
