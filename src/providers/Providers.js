@@ -7,6 +7,8 @@ import { TanstackProviders } from './TanstackProviders'
 import { AuthProviders } from './AuthProviders'
 import { LanguageProviders } from './LanguageProviders';
 import { TranslationProviders } from './TranslationProviders';
+import { ClasslevelProviders } from './ClasslevelProviders';
+import { MaterialProviders } from './MaterialProviders';
 import { NativeBaseProvider } from 'native-base'
 
 export const Providers = () => {
@@ -20,8 +22,12 @@ export const Providers = () => {
               <AuthProviders>
                 <LanguageProviders>
                   <TranslationProviders>
-                      <Routes />
-                      <FlashMessage position="top" floating={false} />  
+                    <ClasslevelProviders>
+                      <MaterialProviders>
+                        <Routes />
+                        <FlashMessage position="top" floating={false} />                        
+                      </MaterialProviders>
+                    </ClasslevelProviders>
                   </TranslationProviders>
                 </LanguageProviders>
               </AuthProviders>

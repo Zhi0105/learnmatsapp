@@ -11,8 +11,16 @@ export const DrawerNavigator = () => {
   return (
     <Drawer.Navigator
       initialRouteName='Home'
+      screenOptions={{
+        headerTitle: 'Alabang Elementary School',
+        headerStyle: {
+          backgroundColor: '#075985',
+        },
+        headerTintColor: '#fff',
+        headerTitleAlign: "center"
+      }}
     >
-      <Drawer.Screen name="Home" component={HomeScreen} />
+      <Drawer.Screen name="Home"  component={HomeScreen} />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="Signout" component={LogoutScreen} />
     </Drawer.Navigator>
