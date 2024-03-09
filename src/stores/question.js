@@ -2,21 +2,21 @@ import { create } from "zustand";
 import { persist, createJSONStorage } from 'zustand/middleware';
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
-let materialStore = (set) => ({
+let questionStore = (set) => ({
 
-  materials: [],
-  setMaterials: (data) => set(() => ({
-    materials: [ ...data ] 
+  questions: [],
+  setQuestions: (data) => set(() => ({
+    questions: [ ...data ] 
   })),
-  resetMaterials: () => set(() => ({ materials: [] })),
+  resetQuestions: () => set(() => ({ questions: [] })),
 
 })
 
-const useMaterialStore = create(persist(materialStore, {
-    name: "material",
+const useQuestionStore = create(persist(questionStore, {
+    name: "question",
     storage: createJSONStorage(() => AsyncStorage), // (optional) by default, 'localStorage' is used
 }))
 
-export default useMaterialStore
+export default useQuestionStore
 
 
