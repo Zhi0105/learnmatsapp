@@ -21,7 +21,10 @@ export const DrawerNavigator = () => {
         headerTitleAlign: "center"
       }}
     >
-      <Drawer.Screen name="HomeStack"  component={HomeStack} />
+      <Drawer.Screen 
+        name="HomeStack"  component={HomeStack}
+        options={{ drawerLabel: "Home" }}
+      />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="Signout" component={LogoutScreen} />
     </Drawer.Navigator>
