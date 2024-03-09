@@ -1,6 +1,7 @@
 import { View } from 'react-native'
 import { Select } from 'native-base'
 import {Dimensions} from 'react-native';
+import { toCapitalize } from '@_utils/helpers';
 
 export const DropDown = ({
   ariaPlaceHolder,
@@ -20,12 +21,12 @@ export const DropDown = ({
           placeholder={ariaPlaceHolder}
           onValueChange={onChange}
         >
-          <Select.Item label='english' value={"0"} />      
+          <Select.Item label='English' value={"0"} />      
         {data.length ? (
           data.map(
             (item, index) => {
               return (
-                <Select.Item key={index} label={item?.name} value={item?.id} />      
+                <Select.Item key={index} label={`${toCapitalize(item?.name)}`} value={item?.id} />      
               );
             }
           )
