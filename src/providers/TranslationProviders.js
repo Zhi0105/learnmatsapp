@@ -4,12 +4,15 @@ import { GetTranslations } from '@_services/translation';
 import useUserStore from '@_stores/auth';
 import useTranslationStore from '@_stores/translation';
 import useLanguageStore from '@_stores/language';
+import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
 
 export const TranslationProviders = ({ children }) => {
+  const navigation = useNavigation();
   const { token } = useUserStore((state) => ({ token: state.token }));
-  const { languagecode  } = useLanguageStore((state) => ({ 
-    languagecode: state.languagecode
+  const { languagecode, setLanguageCode  } = useLanguageStore((state) => ({ 
+    languagecode: state.languagecode,
+    setLanguageCode: state.setLanguageCode
   }));
   const { translations, setTranslations } = useTranslationStore((state) => ({ 
     translations: state.translations,
@@ -21,6 +24,7 @@ export const TranslationProviders = ({ children }) => {
       if(token) {
         const translations = await GetTranslations(token)
         if(translations) {
+          setLanguageCode("")
           setTranslations(translations)
           return translations
         }
@@ -29,8 +33,15 @@ export const TranslationProviders = ({ children }) => {
   }, [token])
 
   const translateCallback = useCallback((word) => {
-    const translatedWord = _.find(translations, (translation) => { return translation.language_id  === languagecode && translation.word.toLowerCase() === word.toLowerCase()})
-    if(translatedWord) return translatedWord.translation
+    const translatedWord = _.find(translations, (translation) => { return translation.language_id  === languagecode && translation?.word.toLowerCase() === word?.toLowerCase()})
+    if(translatedWord) { 
+      navigation.navigate("Home")
+      return translatedWord.translation 
+    }
+    if(languagecode === "0") {
+      navigation.navigate("Home")
+      return word
+    }
     return word
   },[languagecode])
   
