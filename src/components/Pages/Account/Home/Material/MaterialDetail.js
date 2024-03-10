@@ -48,7 +48,7 @@ export const MaterialDetail = ({ route, navigation }) => {
 
         <View className="flex flex-col gap-2">
           <TouchableOpacity
-            onPress={() => Alert.alert("you may proceed to material questionaire!")}
+            onPress={() => navigation.navigate("Question")}
             className="inline-block rounded bg-blue-400 px-6 pb-2 pt-2.5"
           >
             <Text className="text-xs font-medium capitalize leading-normal text-white text-center">Start</Text>
