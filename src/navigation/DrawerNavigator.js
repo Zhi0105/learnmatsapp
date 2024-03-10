@@ -23,7 +23,7 @@ export const DrawerNavigator = () => {
     >
       <Drawer.Screen 
         name="HomeStack"  component={HomeStack}
-        options={{ drawerLabel: "Home" }}
+        options={{ drawerLabel: "Dashboard" }}
       />
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="Signout" component={LogoutScreen} />

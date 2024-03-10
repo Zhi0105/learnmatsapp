@@ -4,11 +4,9 @@ import { GetTranslations } from '@_services/translation';
 import useUserStore from '@_stores/auth';
 import useTranslationStore from '@_stores/translation';
 import useLanguageStore from '@_stores/language';
-import { useNavigation } from '@react-navigation/native';
 import _ from 'lodash';
 
 export const TranslationProviders = ({ children }) => {
-  const navigation = useNavigation();
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { languagecode, setLanguageCode  } = useLanguageStore((state) => ({ 
     languagecode: state.languagecode,
@@ -19,6 +17,7 @@ export const TranslationProviders = ({ children }) => {
     setTranslations: state.setTranslations 
   }));
  
+
   useEffect(() => {
     (async() => {
       if(token) {
@@ -35,11 +34,9 @@ export const TranslationProviders = ({ children }) => {
   const translateCallback = useCallback((word) => {
     const translatedWord = _.find(translations, (translation) => { return translation.language_id  === languagecode && translation?.word.toLowerCase() === word?.toLowerCase()})
     if(translatedWord) { 
-      navigation.navigate("Home")
       return translatedWord.translation 
     }
     if(languagecode === "0") {
-      navigation.navigate("Home")
       return word
     }
     return word
