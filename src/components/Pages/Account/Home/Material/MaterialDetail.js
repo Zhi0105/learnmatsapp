@@ -1,22 +1,26 @@
-import React, { useEffect } from 'react'
-import { View, Text, TouchableOpacity, Alert } from 'react-native'
+import React from 'react'
+import { View, Text, TouchableOpacity } from 'react-native'
 import useQuestionStore from '@_stores/question';
 import useAnswerStore from '@_stores/answer';
 import LottieView from 'lottie-react-native'
-
+import _ from 'lodash';
 
 export const MaterialDetail = ({ route, navigation }) => {
   const { material } = route.params
   const { questions } = useQuestionStore((state) => ({ questions: state.questions }));
   const { answers } = useAnswerStore((state) => ({ answers: state.answers }));
+  
 
-  useEffect(() => {
-    console.log("@material:", material)
-    // console.log("@questions:", questions)
-    // console.log("@answers:", answers)
-
-    
-  }, [material, questions, answers])
+  const handleQuestionsList = () => {
+    let exam = []
+    const questionaire = _.filter(questions, (question) => { return question.material_id === material.id })
+    questionaire?.map((question) => {
+      const answer = _.filter(answers, (answer) => { return answer.question_id === question.id })
+      exam.push({ question: question, choices: [ ...answer ] })
+    })
+  
+    navigation.navigate("Question", { questionList: exam, material: material?.name })
+  }
 
   return (
     <View className="material_detail_main min-h-screen block rounded-lg bg-white text-surface">
@@ -48,7 +52,7 @@ export const MaterialDetail = ({ route, navigation }) => {
 
         <View className="flex flex-col gap-2">
           <TouchableOpacity
-            onPress={() => navigation.navigate("Question")}
+            onPress={() => handleQuestionsList()}
             className="inline-block rounded bg-blue-400 px-6 pb-2 pt-2.5"
           >
             <Text className="text-xs font-medium capitalize leading-normal text-white text-center">Start</Text>
