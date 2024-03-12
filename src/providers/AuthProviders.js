@@ -73,7 +73,10 @@ export const AuthProviders = ({ children }) => {
   }
 
   const authenticate = async(user) => {
-    navigation.navigate("Account")
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Account' }],
+    });
     const userdetails = await GetUser(user)
     userdetails && setUser(userdetails)
     setToken(user)
@@ -81,7 +84,10 @@ export const AuthProviders = ({ children }) => {
 
   const logout = () => {
     setUserLogout()
-    navigation.navigate("Login")
+    navigation.reset({
+      index: 0,
+      routes: [{ name: 'Login' }],
+    });
     showMessage({
       message: "Logout success",
       type: 'success',
