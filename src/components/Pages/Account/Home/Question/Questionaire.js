@@ -42,52 +42,60 @@ export const Questionaire = ({ route, navigation }) => {
       <Text className="border-b-2 border-neutral-100 px-6 py-3 text-xl text-center font-bold leading-tight capitalize">
         {material}
       </Text>
-      <View className="p-6">
-
-        <View className="pb-4 flex flex-row justify-between items-center">
-          <Text className="text-lg font-medium capitalize">
-            question no:
-          </Text>
-          <Text>
-            {questionNo}/{questionList?.length}
-          </Text>
+      {!questionList?.length && 
+        <View className="flex justify-center items-center mt-5">
+          <Text className="capitalize text-xl font-bold"> No question item found.</Text>
         </View>
-        
-        <Question 
-          question={questionList[currentQuestionIndex]}
-          answer={answer}
-          setAnswer={setAnswer}
-        />
+      }
 
-        {!isFinished &&
-          <TouchableOpacity
-            disabled={nextstatusCallback(answer)}
-            onPress={() => handleNextButton()}
-            className={`inline-block rounded px-6 pb-2 pt-2.5
-            ${answer?.hasOwnProperty("id") ? 'bg-blue-400' : 'bg-gray-100'}
-              
-            `}
-          >
-            <Text 
-              className={`text-xs font-medium capitalize leading-normal text-center
-              ${answer?.hasOwnProperty("id") ? 'text-white' : 'text-black'}
+      {questionList?.length > 0 &&
+        <View className="p-6">
+
+          <View className="pb-4 flex flex-row justify-between items-center">
+            <Text className="text-lg font-medium capitalize">
+              question no:
+            </Text>
+            <Text>
+              {questionNo}/{questionList?.length}
+            </Text>
+          </View>
+
+          <Question 
+            question={questionList[currentQuestionIndex]}
+            answer={answer}
+            setAnswer={setAnswer}
+          />
+
+          {!isFinished &&
+            <TouchableOpacity
+              disabled={nextstatusCallback(answer)}
+              onPress={() => handleNextButton()}
+              className={`inline-block rounded px-6 pb-2 pt-2.5
+              ${answer?.hasOwnProperty("id") ? 'bg-blue-400' : 'bg-gray-100'}
+                
               `}
             >
-                Next
-            </Text>
-          </TouchableOpacity>
-        }
+              <Text 
+                className={`text-xs font-medium capitalize leading-normal text-center
+                ${answer?.hasOwnProperty("id") ? 'text-white' : 'text-black'}
+                `}
+              >
+                  Next
+              </Text>
+            </TouchableOpacity>
+          }
 
-        {isFinished && 
-          <TouchableOpacity
-            onPress={() => handleFinished()}
-            className="inline-block rounded px-6 pb-2 pt-2.5 bg-blue-400"
-          >
-            <Text className="text-xs font-medium capitalize leading-normal text-white text-center">Done</Text>
-          </TouchableOpacity>
-        }
+          {isFinished && 
+            <TouchableOpacity
+              onPress={() => handleFinished()}
+              className="inline-block rounded px-6 pb-2 pt-2.5 bg-blue-400"
+            >
+              <Text className="text-xs font-medium capitalize leading-normal text-white text-center">Done</Text>
+            </TouchableOpacity>
+          }
 
-      </View>
+        </View>
+      }
     </View>
   )
 }
