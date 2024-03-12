@@ -3,7 +3,7 @@ import { View } from 'react-native'
 import useLanguageStore from '@_stores/language'
 import { DropDown } from '@_components/Forms/Select'
 
-export const Settings = () => {
+export const Settings = ({ navigation }) => {
   const { languages, languagecode, setLanguageCode } = useLanguageStore((state) => ({ 
     languages: state.languages,
     languagecode: state.languagecode,
@@ -16,7 +16,7 @@ export const Settings = () => {
       <View className="w-full p-2">
         <DropDown 
           value={languagecode}
-          onChange={(newValue) => setLanguageCode(newValue)}
+          onChange={(newValue) => { setLanguageCode(newValue); navigation.navigate("HomeStack") }}
           ariaPlaceHolder={"Choose language"}
           data={languages}
         />
