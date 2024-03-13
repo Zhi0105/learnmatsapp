@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
-export const Question = ({ question, answer, setAnswer }) => {
+export const Question = ({ question, answer, setAnswer, time }) => {
   useEffect(() => {
     question && console.log("@q:", question.choices)
   }, [question]) 
@@ -18,6 +18,7 @@ export const Question = ({ question, answer, setAnswer }) => {
           return (
             <View key={index} className="w-1/2 flex flex-row flex-wrap p-4">
               <TouchableOpacity
+                disabled={time <= 0 ? true : false}
                 onPress={() => setAnswer(item)}
                 className="item w-full" 
               >

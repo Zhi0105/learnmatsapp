@@ -3,10 +3,12 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import { Question } from './Question'
 
 export const Questionaire = ({ route, navigation }) => {
+  const [ isNext, setIsNext ] = useState(true)
   const [ currentQuestionIndex, setCurrentQuestionIndex ] = useState(0)
   const [ questionNo, setQuestionNo ] = useState(1)
   const [ isFinished, setIsFinished ] = useState(false)
   const [ answer, setAnswer ] = useState()
+  const [ timer, setTimer] = useState(30)
   const { questionList, material } = route.params
 
   const handleNextButton = () => {
@@ -14,9 +16,11 @@ export const Questionaire = ({ route, navigation }) => {
       setQuestionNo(questionNo + 1)
       setCurrentQuestionIndex(currentQuestionIndex + 1)
       setAnswer(null)
+      setTimer(30)
     } else {
       Alert.alert("Great!, you may click done button, to view the result")
       setIsFinished(true)
+      setTimer(30)
     }
   }
 
@@ -25,17 +29,35 @@ export const Questionaire = ({ route, navigation }) => {
     navigation.navigate("Home")
   }
 
-  const nextstatusCallback = useCallback((answer) => {
-    if(answer?.hasOwnProperty("id")) {
-      return false
-    } else {
-      return true
-    }
-  }, [])
 
   useEffect(() => {
-    answer && console.log(answer)
-  }, [answer])
+    let interval;
+    if(timer > 0){
+      interval = setInterval(() => {
+        setTimer(seconds => seconds - 1)
+      }, 1000)
+    }
+    return () => clearInterval(interval);
+  }, [timer])
+
+  
+  const nextstatusCallback = useCallback((answer, timer) => {
+    if(answer?.hasOwnProperty("id")) {
+      setIsNext(false)
+    } else {
+      setIsNext(true)
+    }
+
+    if(timer <= 0) {
+      setIsNext(false)
+    }
+  }, [])
+  
+  
+  useEffect(() => {
+    nextstatusCallback(answer, timer)
+  }, [nextstatusCallback, answer, timer])
+
 
   return (
     <View className="questionaire-main min-h-screen block rounded-lg bg-white text-surface">
@@ -53,38 +75,43 @@ export const Questionaire = ({ route, navigation }) => {
 
           <View className="pb-4 flex flex-row justify-between items-center">
             <Text className="text-lg font-medium capitalize">
-              question no:
+              question no: {questionNo}/{questionList?.length}
             </Text>
-            <Text>
-              {questionNo}/{questionList?.length}
+            <Text 
+              className={`font-bold text-lg
+                ${timer <= 10 ? 'text-red-500': 'text-green-500'}
+              `}
+            >
+              {timer}
             </Text>
+              
           </View>
 
           <Question 
             question={questionList[currentQuestionIndex]}
             answer={answer}
             setAnswer={setAnswer}
+            time={timer}
           />
 
           {!isFinished &&
             <TouchableOpacity
-              disabled={nextstatusCallback(answer)}
+              disabled={isNext}
               onPress={() => handleNextButton()}
               className={`inline-block rounded px-6 pb-2 pt-2.5
-              ${answer?.hasOwnProperty("id") ? 'bg-blue-400' : 'bg-gray-100'}
+              ${isNext ? 'bg-gray-100' : 'bg-blue-400'}
                 
               `}
             >
               <Text 
                 className={`text-xs font-medium capitalize leading-normal text-center
-                ${answer?.hasOwnProperty("id") ? 'text-white' : 'text-black'}
+                ${isNext ? 'text-black' : 'text-white'}
                 `}
               >
                   Next
               </Text>
             </TouchableOpacity>
           }
-
           {isFinished && 
             <TouchableOpacity
               onPress={() => handleFinished()}
