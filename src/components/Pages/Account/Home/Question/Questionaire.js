@@ -3,32 +3,57 @@ import { View, Text, TouchableOpacity, Alert } from 'react-native'
 import { Question } from './Question'
 
 export const Questionaire = ({ route, navigation }) => {
+  const { questionList, material } = route.params
   const [ isNext, setIsNext ] = useState(true)
   const [ currentQuestionIndex, setCurrentQuestionIndex ] = useState(0)
   const [ questionNo, setQuestionNo ] = useState(1)
-  const [ isFinished, setIsFinished ] = useState(false)
   const [ answer, setAnswer ] = useState()
   const [ timer, setTimer] = useState(30)
-  const { questionList, material } = route.params
+  const [ answerSheet ] = useState([])
+
+
+  const handleFinished = () => {
+    Alert.alert(
+      'Message from learnmatsapp:',
+      'you almost done, press yes if you want to view your result, eitherwise press no!',
+      [
+        {
+          text: "Yes",
+          onPress: () => {
+            navigation.reset({
+              index: 0,
+              routes: [{ name: 'Result', params: { Result: answerSheet } }],
+            });
+          }
+        }, 
+        {
+          text: "No",
+          onPress: () => {
+            console.log("@AS:", answerSheet)
+            navigation.navigate("Home")
+          }
+        }
+      ],
+      { cancelable: false }
+    )
+  }
 
   const handleNextButton = () => {
+    handleAnswerSheet(answer, questionList[currentQuestionIndex])
     if(currentQuestionIndex < questionList?.length - 1) {
       setQuestionNo(questionNo + 1)
       setCurrentQuestionIndex(currentQuestionIndex + 1)
-      setAnswer(null)
+
       setTimer(30)
     } else {
-      Alert.alert("Great!, you may click done button, to view the result")
-      setIsFinished(true)
-      setTimer(30)
+      handleFinished()
     }
   }
 
-  const handleFinished = () => {
-    setIsFinished(false)
-    navigation.navigate("Home")
+  const handleAnswerSheet = (answer, currentQuestion) => {
+    answerSheet.push({ question: currentQuestion?.question, user_answer:answer })
+    setAnswer(null)
   }
-
 
   useEffect(() => {
     let interval;
@@ -40,7 +65,6 @@ export const Questionaire = ({ route, navigation }) => {
     return () => clearInterval(interval);
   }, [timer])
 
-  
   const nextstatusCallback = useCallback((answer, timer) => {
     if(answer?.hasOwnProperty("id")) {
       setIsNext(false)
@@ -94,7 +118,6 @@ export const Questionaire = ({ route, navigation }) => {
             time={timer}
           />
 
-          {!isFinished &&
             <TouchableOpacity
               disabled={isNext}
               onPress={() => handleNextButton()}
@@ -111,16 +134,7 @@ export const Questionaire = ({ route, navigation }) => {
                   Next
               </Text>
             </TouchableOpacity>
-          }
-          {isFinished && 
-            <TouchableOpacity
-              onPress={() => handleFinished()}
-              className="inline-block rounded px-6 pb-2 pt-2.5 bg-blue-400"
-            >
-              <Text className="text-xs font-medium capitalize leading-normal text-white text-center">Done</Text>
-            </TouchableOpacity>
-          }
-
+    
         </View>
       }
     </View>

@@ -4,6 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import { HomeScreen } from '@_screens/Account/HomeScreen'
 import { MaterialDetailScreen } from '@_screens/Account/Home/MaterialDetailScreen'
 import { QuestionaireScreen } from '@_screens/Account/Home/QuestionairesScreen'
+import { ResultScreen } from '@_screens/Account/Home/ResultScreen'
 
 export const HomeStack = () => {
   const Stack = createNativeStackNavigator();
@@ -29,6 +30,13 @@ export const HomeStack = () => {
 
       <Stack.Screen  
         name="Question" component={QuestionaireScreen} 
+        options={{
+          animation: "slide_from_right"
+        }}
+      />
+
+      <Stack.Screen  
+        name="Result" component={ResultScreen} 
         options={{
           animation: "slide_from_right"
         }}
