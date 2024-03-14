@@ -1,10 +1,12 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { View, Text, TouchableOpacity } from 'react-native'
 
-export const Question = ({ question, answer, setAnswer, time }) => {
-  useEffect(() => {
-    question && console.log("@q:", question.choices)
-  }, [question]) 
+export const Question = ({ 
+  question, 
+  answer, 
+  setAnswer, 
+  time, 
+}) => {
 
   return (
     <View className="question-main">
