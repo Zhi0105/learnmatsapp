@@ -5,6 +5,14 @@ import { Login, GetUser, Register } from '@_services/authentications';
 import useUserStore from '@_stores/auth';
 import { useNavigation } from '@react-navigation/native';
 import { showMessage } from "react-native-flash-message";
+import _ from 'lodash'
+
+import useClasslevelStore from '@_stores/classlevel';
+import useMaterialStore from '@_stores/material';
+import useQuestionStore from '@_stores/question';
+import useAnswerStore from '@_stores/answer';
+import useLanguageStore from '@_stores/language';
+import useTranslationStore from '@_stores/translation';
 
 export const AuthProviders = ({ children }) => {
   const queryClient = useQueryClient();
@@ -64,6 +72,23 @@ export const AuthProviders = ({ children }) => {
     },
   });
 
+  const { resetClasslevels} = useClasslevelStore((state) => ({ resetClasslevels: state.resetClasslevels }));
+  const { resetMaterials } = useMaterialStore((state) => ({ resetMaterials: state.resetMaterials }));
+  const { resetQuestions} = useQuestionStore((state) => ({ resetQuestions: state.resetQuestions }));
+  const { resetAnswers} = useAnswerStore((state) => ({ resetAnswers: state.resetAnswers }));
+  const { resetLanguages} = useLanguageStore((state) => ({ resetLanguages: state.resetLanguages }));
+  const { resetTranslations} = useTranslationStore((state) => ({ resetTranslations: state.resetTranslations }));
+
+  const logout_debounce = _.debounce(() => {
+    resetClasslevels()
+    resetMaterials()
+    resetQuestions()
+    resetAnswers()
+    resetLanguages()
+    resetTranslations()
+  }, 1000)
+  
+
   const register = (data) => {
     handleRegister(data)
   }
@@ -95,6 +120,7 @@ export const AuthProviders = ({ children }) => {
       floating: true,
       position: 'top',
     })
+    logout_debounce()
   }
 
   
