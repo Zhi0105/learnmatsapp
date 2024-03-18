@@ -22,7 +22,7 @@ export const Questionaire = ({ route, navigation }) => {
           onPress: () => {
             navigation.reset({
               index: 0,
-              routes: [{ name: 'Result', params: { Result: answerSheet } }],
+              routes: [{ name: 'Result', params: { Result: answerSheet, material: material } }],
             });
           }
         }, 
@@ -51,7 +51,7 @@ export const Questionaire = ({ route, navigation }) => {
   }
 
   const handleAnswerSheet = (answer, currentQuestion) => {
-    answerSheet.push({ question: currentQuestion?.question, user_answer:answer })
+    answerSheet.push({ question: currentQuestion, user_answer:answer })
     setAnswer(null)
   }
 
