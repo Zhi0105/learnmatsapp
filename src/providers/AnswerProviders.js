@@ -7,18 +7,15 @@ import useAnswerStore from '@_stores/answer';
 export const AnswerProviders = ({ children }) => {
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { setAnswers } = useAnswerStore((state) => ({ setAnswers: state.setAnswers }));
+  const { data:answers, isLoading: answersLoading, refetch: answersRefetch } = GetAnswers(token)
 
   useEffect(() => {
-    (async() => {
-      if(token) {
-        const answers = await GetAnswers(token)
-        if(answers) {
-          setAnswers(answers)
-          return answers
-        }
-      }
-    })()
-  }, [token])
+    if(token && !answersLoading) {
+      answersRefetch()
+    }
+
+    answers?.length && setAnswers(answers)
+  }, [token, answersRefetch, answersLoading, answers])
 
   return (
     <AnswerContext.Provider

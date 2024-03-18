@@ -7,19 +7,16 @@ import useQuestionStore from '@_stores/question';
 export const QuestionProviders = ({ children }) => {
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { setQuestions } = useQuestionStore((state) => ({ setQuestions: state.setQuestions }));
+  const { data:questions, isLoading: questionsLoading, refetch: questionsRefetch } = GetQuestions(token)
 
+  useEffect(() => {
+    if(token && !questionsLoading) {
+      questionsRefetch()
+    }
 
-useEffect(() => {
-    (async() => {
-      if(token) {
-        const questions = await GetQuestions(token)
-        if(questions) {
-          setQuestions(questions)
-          return questions
-        }
-      }
-    })()
-  }, [token])
+    questions?.length && setQuestions(questions)
+  }, [token, questionsRefetch, questionsLoading, questions])
+
 
   return (
     <QuestionContext.Provider
