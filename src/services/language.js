@@ -1,4 +1,5 @@
 import { apiClient } from "@_src/http-commons"
+import { useQuery } from "@tanstack/react-query";
 
 
 export const GetLanguages = (user) => {
@@ -6,11 +7,18 @@ export const GetLanguages = (user) => {
     Authorization: `Bearer ${user}`
   }
 
-  const result  = apiClient.get('/language/get-languages', { headers }).then(res => {
-    return res.data
-  }).catch(err => {
-    return err.response.data
+  return useQuery({
+    queryKey: ['languages'],
+    queryFn: () => {
+      const result  = apiClient.get('/language/get-languages', { headers }).then(res => {
+        return res.data
+      }).catch(err => {
+        return err.response.data
+      })
+
+      return result
+    }
   })
 
-  return result
+
 }

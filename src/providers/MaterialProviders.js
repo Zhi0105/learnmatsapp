@@ -7,18 +7,16 @@ import useMaterialStore from '@_stores/material';
 export const MaterialProviders = ({ children }) => {
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { setMaterials } = useMaterialStore((state) => ({ setMaterials: state.setMaterials }));
+  const { data:materials, isLoading: materialsLoading, refetch: materialsRefetch } = GetMaterial(token)
+
 
   useEffect(() => {
-    (async() => {
-      if(token) {
-        const materials = await GetMaterial(token)
-        if(materials) {
-          setMaterials(materials)
-          return materials
-        }
-      }
-    })()
-  }, [token])
+    if(token && !materialsLoading) {
+      materialsRefetch()
+    }
+
+    materials?.length && setMaterials(materials)
+  }, [token, materialsRefetch, materialsLoading, materials])
 
   return (
     <MaterialContext.Provider

@@ -7,18 +7,15 @@ import useClasslevelStore from '@_stores/classlevel';
 export const ClasslevelProviders = ({ children }) => {
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { setClasslevels } = useClasslevelStore((state) => ({ setClasslevels: state.setClasslevels }));
+  const { data:classlevels, isLoading: classlevelsLoading, refetch: classlevelsRefetch } = GetClassLevel(token)
 
   useEffect(() => {
-    (async() => {
-      if(token) {
-        const classlevels = await GetClassLevel(token)
-        if(classlevels) {
-          setClasslevels(classlevels)
-          return classlevels
-        }
-      }
-    })()
-  }, [token])
+    if(token && !classlevelsLoading) {
+      classlevelsRefetch()
+    }
+
+    classlevels?.length && setClasslevels(classlevels)
+  }, [token, classlevelsRefetch, classlevelsLoading, classlevels])
 
   return (
     <ClasslevelContext.Provider

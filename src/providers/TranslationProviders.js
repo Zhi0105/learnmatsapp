@@ -16,20 +16,19 @@ export const TranslationProviders = ({ children }) => {
     translations: state.translations,
     setTranslations: state.setTranslations 
   }));
- 
+
+  const { data:getTranslations, isLoading: translationLoading, refetch: translationRefetch } = GetTranslations(token)
 
   useEffect(() => {
-    (async() => {
-      if(token) {
-        const translations = await GetTranslations(token)
-        if(translations) {
-          setLanguageCode("")
-          setTranslations(translations)
-          return translations
-        }
-      }
-    })()
-  }, [token])
+    if(token && !translationLoading) {
+      translationRefetch()
+    }
+    
+      getTranslations?.length && setLanguageCode("")
+      getTranslations?.length && setTranslations(getTranslations)
+    
+  }, [token, translationRefetch, translationLoading, getTranslations])
+
 
   const translateCallback = useCallback((word) => {
     const translatedWord = _.find(translations, (translation) => { return translation.language_id  === languagecode && translation?.word.toLowerCase() === word?.toLowerCase()})
