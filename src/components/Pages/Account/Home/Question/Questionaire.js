@@ -1,8 +1,13 @@
-import React, { useState, useEffect, useCallback } from 'react'
+import React, { useState, useEffect, useCallback, useContext } from 'react'
 import { View, Text, TouchableOpacity, Alert } from 'react-native'
+import { ResultContext } from '@_context/ResultContext'
 import { Question } from './Question'
+import useUserStore from '@_stores/auth'
+import _ from 'lodash';
 
 export const Questionaire = ({ route, navigation }) => {
+  const { createResult } = useContext(ResultContext)
+  const { token } = useUserStore((state) => ({ token: state.token }));
   const { questionList, material } = route.params
   const [ isNext, setIsNext ] = useState(true)
   const [ currentQuestionIndex, setCurrentQuestionIndex ] = useState(0)
@@ -11,6 +16,10 @@ export const Questionaire = ({ route, navigation }) => {
   const [ timer, setTimer] = useState(30)
   const [ answerSheet ] = useState([])
 
+  const getCorrectCallback = useCallback((answerSheet) => {
+    const correct = _.filter(answerSheet, (res) => { return res.user_answer?.is_correct === true })
+    return correct?.length
+  }, [answerSheet])
 
   const handleFinished = () => {
     Alert.alert(
@@ -29,8 +38,17 @@ export const Questionaire = ({ route, navigation }) => {
         {
           text: "No",
           onPress: () => {
-            console.log("@AS:", answerSheet)
-            navigation.navigate("Home")
+            const questionRef = answerSheet[answerSheet?.length - 1]?.question.question 
+            let payload = {
+              material_id: questionRef?.material_id,
+              classlevel_id: questionRef?.classlevel_id,
+              score_by_percentage: (getCorrectCallback(answerSheet) / answerSheet?.length) * 100,
+              total_correct_answer: getCorrectCallback(answerSheet),
+              total_incorrect_answer: answerSheet?.length - getCorrectCallback(answerSheet),
+              number_of_question: answerSheet?.length,
+              user: token
+            }
+            payload && createResult(payload)
           }
         }
       ],
