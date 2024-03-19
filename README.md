@@ -34,8 +34,8 @@ $ yarn android:apk
 # development
 # open cmd and type ipconfig (check IPv4 address of your computer)
 # example:
-REACT_APP_API_URL="http://192.168.1.5:3001/"
+API_URL="http://192.168.1.5:3001/"
 # prod
-REACT_APP_API_URL="https://nice-blue-ostrich-wear.cyclic.app/"
+API_URL="https://nice-blue-ostrich-wear.cyclic.app/"
 
 ```
