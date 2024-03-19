@@ -1,10 +1,11 @@
-import React, { useCallback } from 'react'
+import React, { useCallback, useContext } from 'react'
 import { View, Text, ScrollView, TouchableOpacity } from 'react-native'
+import { TranslationContext } from '@_context/TranslationContext'
 import LottieView from 'lottie-react-native'
 import _ from 'lodash'
 
 export const Material = ({ data = [], selected = null, navigation }) => {
-
+  const { translate } = useContext(TranslationContext)
   const materialCallback = useCallback((materials, classlevel_id) => {
     if(classlevel_id) {
       const newMaterials = _.filter(materials, (i) => { return i.classlevel_id === Number(classlevel_id) })
@@ -39,7 +40,7 @@ export const Material = ({ data = [], selected = null, navigation }) => {
                   loop
                 />
                 </View>
-                <Text>{material?.name}</Text>
+                <Text>{translate(material?.name)}</Text>
               </TouchableOpacity>
             )
           })}      
