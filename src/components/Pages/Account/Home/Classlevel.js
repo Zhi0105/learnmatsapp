@@ -1,8 +1,11 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { View, Text, ScrollView, TouchableOpacity} from 'react-native'
 import LottieView from 'lottie-react-native'
+import { TranslationContext } from '@_context/TranslationContext'
+
 
 export const Classlevel = ({ data = [], selected, setSelected }) => {
+  const { translate } = useContext(TranslationContext)
 
   return (
     <ScrollView className="classlevel-main h-full w-full">
@@ -26,7 +29,7 @@ export const Classlevel = ({ data = [], selected, setSelected }) => {
                   loop
                 />
                 </View>
-                <Text>{classlevel?.name}</Text>
+                <Text>{translate(classlevel?.name)}</Text>
               </TouchableOpacity>
             )
           })}      
