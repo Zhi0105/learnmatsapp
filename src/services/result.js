@@ -1,4 +1,22 @@
 import { apiClient } from "@_src/http-commons"
+import { useQuery } from "@tanstack/react-query";
+
+export const GetResult = (user) => {
+  const headers = {
+    Authorization: `Bearer ${user}`
+  }
+  return useQuery({
+    queryKey: ['results'],
+    queryFn: () => {
+      const result = apiClient.get('/result/get-results', { headers }).then(res => {
+        return res.data
+      })
+      return result
+    }
+  })
+
+
+}
 
 export const CreateResult = (payload) => {
   let params = {
