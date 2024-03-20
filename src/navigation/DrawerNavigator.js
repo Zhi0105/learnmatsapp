@@ -3,8 +3,8 @@ import { createDrawerNavigator } from '@react-navigation/drawer';
 
 import { SettingsScreen } from '@_screens/Account/SettingsScreen';
 import { LogoutScreen } from '@_screens/Account/LogoutScreen';
-
 import { HomeStack } from './Stack/HomeStack';
+import { RecordStack } from './Stack/RecordStack';
 
 export const DrawerNavigator = () => {
   const Drawer = createDrawerNavigator();
@@ -25,6 +25,11 @@ export const DrawerNavigator = () => {
         name="HomeStack"  component={HomeStack}
         options={{ drawerLabel: "Dashboard" }}
       />
+      <Drawer.Screen 
+        name="RecordStack"  component={RecordStack}
+        options={{ drawerLabel: "History" }}
+      />
+      
       <Drawer.Screen name="Settings" component={SettingsScreen} />
       <Drawer.Screen name="Signout" component={LogoutScreen} />
     </Drawer.Navigator>
