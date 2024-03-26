@@ -58,7 +58,7 @@ export const Result = ({ route }) => {
                       <Text className={`w-full font-bold capitalize rounded-md shadow-lg p-2
                         ${choice.id === res.user_answer.id && res.user_answer.is_correct === true ? 'bg-green-400' : 
                           choice.id === res.user_answer.id && res.user_answer.is_correct === false ? 'bg-red-400':
-                          choice.is_correct === true && res.user_answer.is_correct === false ? 'bg-blue-400':
+                          choice.is_correct === true && res.user_answer.is_correct === false ? 'bg-green-400':
                         'bg-white'
                         }`}
                       >
