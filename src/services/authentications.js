@@ -33,5 +33,18 @@ export const GetUser = (user) => {
     return result
 }
 
+export const UpdateUser = (payload) => {
+  const headers = {
+    Authorization: `Bearer ${payload.user}`
+  }
+  let params = {}
+  payload.name && (params.name = payload.name)
 
+ 
+  const result = apiClient.patch('/users/update', params, { headers }).then(res => {
+    return res.data
+  })
+
+  return result
+}
 
