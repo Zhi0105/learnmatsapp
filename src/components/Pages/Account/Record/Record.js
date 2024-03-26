@@ -6,7 +6,7 @@ import useMaterialStore from '@_stores/material';
 import * as Progress from 'react-native-progress';
 import _ from 'lodash'
 
-export const Record = () => {
+export const Record = ({ navigation }) => {
   const { token } = useUserStore((state) => ({ token: state.token }));
   const { materials } = useMaterialStore((state) => ({ materials: state.materials }));
   const { data:results, isLoading: resultLoading, refetch: resultRefetch } = GetResult(token)
@@ -15,7 +15,11 @@ export const Record = () => {
     if(token && !resultLoading) {
       resultRefetch()
     }
-  }, [token, resultRefetch, resultLoading])
+    const unsubscribe = navigation.addListener('focus', () => {
+      resultRefetch()
+    })
+    return unsubscribe;
+  }, [token, resultRefetch, resultLoading, navigation])
 
   const getMaterialName = (material_id) => {
     const material = _.find(materials, { id: material_id })
