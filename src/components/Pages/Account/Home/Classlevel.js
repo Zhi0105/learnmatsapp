@@ -10,6 +10,9 @@ export const Classlevel = ({ data = [], selected, setSelected }) => {
   return (
     <ScrollView className="classlevel-main h-full w-full">
       <View className="container p-2 flex flex-row flex-wrap justify-around gap-2">
+          {!data?.length && 
+            <View><Text>no data found!</Text></View>
+          }
           {data?.map((classlevel, index) => {
             return (
               <TouchableOpacity 
