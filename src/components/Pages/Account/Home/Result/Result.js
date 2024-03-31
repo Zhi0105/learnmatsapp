@@ -43,7 +43,7 @@ export const Result = ({ route }) => {
         </View>
       </View>
 
-      <View className="history h-[60%] flex flex-col p-6">
+      <View className="history h-[40%] flex flex-col p-6">
         <ScrollView className="classlevel-main h-full w-full">
           {Result?.length && Result.map((res, index) => {
             return (
@@ -77,7 +77,7 @@ export const Result = ({ route }) => {
       <TouchableOpacity
         disabled={createResultLoading}
         onPress={() => handleConfirm()} 
-        className="flex justify-center items-center rounded mx-6 pb-2 pt-2.5 bg-blue-400"
+        className="flex justify-center items-center rounded mx-6 pb-2 pt-2.5 bg-blue-400 my-2"
       >
         <Text
           className="text-xs font-medium capitalize leading-normal text-center text-white"
