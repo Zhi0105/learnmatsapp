@@ -1,16 +1,20 @@
+import React, { useContext } from 'react'
+import { TranslationContext } from '@_context/TranslationContext';
 import { View } from 'react-native'
 import { Select } from 'native-base'
-import {Dimensions} from 'react-native';
+import { Dimensions } from 'react-native';
 import { toCapitalize } from '@_utils/helpers';
 
 export const DropDown = ({
   ariaPlaceHolder,
   value,
   onChange,
+  is_language,
   data = [],
 }) => {
 
   const windowWidth = Dimensions.get('window').width;
+  const { translate } = useContext(TranslationContext)
   return (
     <View className="select-container relative w-full flex justify-center items-center">
         <Select
@@ -21,12 +25,12 @@ export const DropDown = ({
           placeholder={ariaPlaceHolder}
           onValueChange={onChange}
         >
-          <Select.Item label='English' value={"0"} />      
+        {is_language && <Select.Item label='English' value={"0"} />}      
         {data.length ? (
           data.map(
             (item, index) => {
               return (
-                <Select.Item key={index} label={`${toCapitalize(item?.name)}`} value={item?.id} />      
+                <Select.Item key={index} label={`${translate(toCapitalize(item?.name))}`} value={item?.id} />      
               );
             }
           )
