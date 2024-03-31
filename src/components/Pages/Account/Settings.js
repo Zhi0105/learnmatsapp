@@ -18,6 +18,7 @@ export const Settings = ({ navigation }) => {
           value={languagecode}
           onChange={(newValue) => { setLanguageCode(newValue); navigation.navigate("HomeStack") }}
           ariaPlaceHolder={"Choose language"}
+          is_language={true}
           data={languages}
         />
       </View>
