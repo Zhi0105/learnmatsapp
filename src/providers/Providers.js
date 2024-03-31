@@ -12,6 +12,7 @@ import { MaterialProviders } from './MaterialProviders';
 import { QuestionProviders } from './QuestionProviders';
 import { AnswerProviders } from './AnswerProviders';
 import { ResultProviders } from './ResultProviders';
+import { CategoryProviders } from './CategoryProviders';
 import { NativeBaseProvider } from 'native-base'
 
 export const Providers = () => {
@@ -30,8 +31,10 @@ export const Providers = () => {
                         <QuestionProviders>
                           <AnswerProviders>
                             <ResultProviders>
-                              <Routes />
-                              <FlashMessage position="top" floating={false} />
+                              <CategoryProviders>
+                                <Routes />
+                                <FlashMessage position="top" floating={false} />
+                              </CategoryProviders>
                             </ResultProviders>     
                           </AnswerProviders>
                         </QuestionProviders>

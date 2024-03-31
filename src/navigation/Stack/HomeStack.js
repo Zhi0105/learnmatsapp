@@ -2,6 +2,7 @@ import React from 'react'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 
 import { HomeScreen } from '@_screens/Account/HomeScreen'
+import { MaterialScreen } from '@_screens/Account/Home/MaterialScreen'
 import { MaterialDetailScreen } from '@_screens/Account/Home/MaterialDetailScreen'
 import { QuestionaireScreen } from '@_screens/Account/Home/QuestionairesScreen'
 import { ResultScreen } from '@_screens/Account/Home/ResultScreen'
@@ -20,9 +21,15 @@ export const HomeStack = () => {
           animation:'slide_from_right'
         }}
       />
+      <Stack.Screen  
+        name="Material" component={MaterialScreen} 
+        options={{
+          animation:'slide_from_right'
+        }}
+      />
 
       <Stack.Screen  
-        name="Material" component={MaterialDetailScreen} 
+        name="Materialdetail" component={MaterialDetailScreen} 
         options={{
           animation:'slide_from_right'
         }}
