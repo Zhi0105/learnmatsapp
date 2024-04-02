@@ -41,7 +41,7 @@ export const Home = ({ navigation }) => {
           <Text className="text-lg font-bold text-white">{translate("for brighter")}</Text>
           <Text className="text-lg font-bold text-white">{translate("future")}.</Text>
         </View>
-        <View className="classlevel-section max-h-[20%] px-4 mt-2">
+        <View className="classlevel-section max-h-[25%] px-4 mt-2">
           <Text className="text-xl font-bold">{translate("Class levels")}:</Text>
           <Classlevel 
             data={classlevels}

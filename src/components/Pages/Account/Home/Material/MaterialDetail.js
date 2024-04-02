@@ -1,5 +1,5 @@
 import React, { useContext } from 'react'
-import { View, Text, TouchableOpacity, ScrollView } from 'react-native'
+import { View, Text, TouchableOpacity, ScrollView, Dimensions } from 'react-native'
 import { TranslationContext } from '@_context/TranslationContext';
 import useQuestionStore from '@_stores/question';
 import useAnswerStore from '@_stores/answer';
@@ -11,7 +11,7 @@ export const MaterialDetail = ({ route, navigation }) => {
   const { material } = route.params
   const { questions } = useQuestionStore((state) => ({ questions: state.questions }));
   const { answers } = useAnswerStore((state) => ({ answers: state.answers }));
-  
+  const { height } = Dimensions.get('window');
 
   const handleQuestionsList = () => {
     let exam = []
@@ -24,8 +24,9 @@ export const MaterialDetail = ({ route, navigation }) => {
     navigation.navigate("Question", { questionList: exam, material: material?.name })
   }
 
+
   return (
-    <View className="material_detail_main min-h-screen block rounded-lg bg-white text-surface">
+    <View style={{ height: height }} className="material_detail_main block rounded-lg bg-white text-surface">
      <View className="title w-full flex flex-row justify-between items-center py-4 px-4 border-y-4 border-gray-200">
         <TouchableOpacity onPress={() => navigation.goBack()}>
           <MaterialCommunityIcons name="arrow-left" color="gray" size={28} /> 
@@ -38,7 +39,8 @@ export const MaterialDetail = ({ route, navigation }) => {
             {translate(material?.material_description_title)}:
         </Text>
         <ScrollView 
-          className="h-[35%] w-full"
+          style={{ height: height * 0.70 }}
+          className="w-full"
         >
           <View className="container p-2">
             <Text className="mb-4 text-base">
